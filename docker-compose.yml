@@ -1,0 +1,33 @@
+services:
+  api:
+    build: .
+    image: mope-middleware:latest
+    ports:
+      - "8000:8000"
+    env_file: .env
+    volumes:
+      # Mount only data/ — never the whole repo (keeps .env/.git out of the
+      # container). Committed .pkl artifacts and downloaded prompts/dataset live
+      # here; retrain writes new .pkl files back to the host through this mount.
+      - ./data:/app/data
+    # depends_on: [cache]   # uncomment when running the cache profile
+    restart: unless-stopped
+
+  # On-demand manual retrain: `docker compose run --rm trainer`
+  trainer:
+    build: .
+    image: mope-middleware:latest
+    profiles: ["tools"]
+    env_file: .env
+    volumes:
+      - ./data:/app/data
+    command: ["python", "-m", "app.training.train_proxy"]
+
+  # Optional Redis for a future persistent quota store / feedback buffer.
+  # Enable with: `docker compose --profile cache up`
+  cache:
+    image: redis:7-alpine
+    profiles: ["cache"]
+    ports:
+      - "6379:6379"
+    restart: unless-stopped

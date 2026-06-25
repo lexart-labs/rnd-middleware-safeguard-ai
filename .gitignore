@@ -1,0 +1,27 @@
+# secrets
+.env
+
+# IDE / tooling
+.idea/
+.vscode/
+.ruff_cache/
+.claude/settings.local.json
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# external assets downloaded from Kaggle (see README) — NOT committed
+data/prompts.json
+data/dataset.json
+
+# transient retrain artifacts (atomically swapped into the committed .pkl files)
+data/models/*_new.pkl
+
+# logs
+logs/*.log
+*.log

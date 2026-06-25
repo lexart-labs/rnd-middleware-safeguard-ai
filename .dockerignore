@@ -1,0 +1,20 @@
+# Keep secrets and local cruft out of the build context / image.
+.env
+.git
+.gitignore
+.idea/
+.vscode/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+logs/
+*.log
+tests/
+docs/
+*.md
+# Generated/external data (downloaded at runtime; committed .pkl artifacts are
+# brought in via the volume mount, not baked into the image).
+data/dataset.json
+data/prompts.json
