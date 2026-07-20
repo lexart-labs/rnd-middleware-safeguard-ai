@@ -25,3 +25,5 @@ data/models/*_new.pkl
 # logs
 logs/*.log
 *.log
+
+teleprompter-*
